@@ -40,20 +40,17 @@ object Main {
    * Exercise 3
    */
   def countChange(money: Int, coins: List[Int]): Int = {
-    if (money == 0) 0
+    if (money == 0) 1
     else if (coins.isEmpty) 0
     else {
-      def countSimpleDivider(count: Int, coins: List[Int]): Int = {
-        if (coins.isEmpty) count
-        else {
-          val h = coins.head
-          val t = coins.tail
-          if (money < h) 0
-          else if (money % h == 0) countSimpleDivider(count + 1, t)
-          else countSimpleDivider(count, t)
-        }        
+      def countSimpleDivider(money: Int, coins: List[Int]): Int = {
+        if (money == 0) 1
+        else if (money < 0) 0
+        else if (coins.isEmpty) 0
+        else countSimpleDivider(money, coins.tail) + countSimpleDivider(money - coins.head, coins) 
       }
-      countSimpleDivider(0, coins.sorted)
+      countSimpleDivider(money, coins.sorted)
     }
+
   }
 }
