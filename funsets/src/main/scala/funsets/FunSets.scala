@@ -20,8 +20,8 @@ object FunSets {
   /**
    * Returns the set of the one given element.
    */
-  def singletonSet(elem: Int): Set = {    
-     (x: Int) => elem == x
+  def singletonSet(elem: Int): Set = {
+    (x: Int) => elem == x
   }
 
   /**
@@ -29,7 +29,7 @@ object FunSets {
    * the sets of all elements that are in either `s` or `t`.
    */
   def union(s: Set, t: Set): Set = {
-    (elem: Int) => (contains(s, elem) || contains(t, elem)) 
+    (elem: Int) => (contains(s, elem) || contains(t, elem))
   }
 
   /**
@@ -66,8 +66,8 @@ object FunSets {
   def forall(s: Set, p: Int => Boolean): Boolean = {
     def iter(a: Int): Boolean = {
       if (a > bound) true
-      else if (contains(s, a)) p(a) && iter(a+1)
-      else iter(a+1)
+      else if (contains(s, a)) p(a) && iter(a + 1)
+      else iter(a + 1)
     }
     iter(-bound)
   }
@@ -76,12 +76,22 @@ object FunSets {
    * Returns whether there exists a bounded integer within `s`
    * that satisfies `p`.
    */
-  def exists(s: Set, p: Int => Boolean): Boolean = ???
+  def exists(s: Set, p: Int => Boolean): Boolean = {
+    def q(a: Int) : Boolean = !p(a)
+    !forall(s, q)
+  }
 
   /**
    * Returns a set transformed by applying `f` to each element of `s`.
    */
-  def map(s: Set, f: Int => Int): Set = ???
+  def map(s: Set, f: Int => Int): Set = {
+    def iter(a: Int): Set = {
+      if (a > bound) singletonSet(f(a - 1))
+      else if (contains(s, a)) union(singletonSet(f(a)), iter(a + 1))
+      else iter(a + 1)
+    }
+    iter(-bound)
+  }
 
   /**
    * Displays the contents of a set
