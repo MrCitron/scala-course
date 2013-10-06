@@ -144,11 +144,13 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
    */
   def filter(p: Tweet => Boolean): TweetSet = {
     def acc = new NonEmpty(elem, new Empty, new Empty)
-    foreach(elem => {filterAcc(p, acc)})
+    foreach((x: Tweet) => filterAcc(p, acc))
+    acc
   }
 
   def filterAcc(p: Tweet => Boolean, acc: TweetSet): TweetSet = {
-    if (p(elem)) acc.incl(elem) else acc
+    if (p(elem)) acc.incl(elem)
+    else acc
   }
 
   /**
