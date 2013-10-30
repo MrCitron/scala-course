@@ -161,9 +161,19 @@ object Anagrams {
    *
    *  Note: There is only one anagram of an empty sentence.
    */
-  def sentenceAnagrams(sentence: Sentence): List[Sentence] = {
-    sentenceOccurrences(sentence)    
-    dictionaryByOccurrences
-  }
+  def sentenceAnagrams(sentence: Sentence): List[Sentence] = ??? /*{
+    //sentenceOccurrences(sentence)    
+    //dictionaryByOccurrences
+  }*/
 
+  def main(args: Array[String]) {
+    val sentence = List("yes", "man")
+    val sOcc = sentenceOccurrences(sentence)
+    val comb = combinations(sOcc)
+    comb foreach (x =>
+      if (dictionaryByOccurrences.contains(x))
+        println(dictionaryByOccurrences.apply(x)))
+    //dictionaryByOccurrences filter (a => a._2.length > 3) foreach(x => println(x))
+    //dictionaryByOccurrences filter (occ => comb.contains(occ._1)) foreach(x => println(x))
+  }
 }
